@@ -194,7 +194,7 @@ body {
   margin-right: 20px;
 }
 
-//////// Click on the image and get red border //
+/* Click on the image and get red border */
 /* Default styling for the image */
 .image {
   border: none; /* No border by default */
@@ -206,7 +206,7 @@ body {
 .image.selected {
   border: 2px solid red;
 }
-/*Order confirmed container*/
+/* Order confirmed container */
 .order-item-row {
   display: flex;
   justify-content: space-between;
@@ -237,5 +237,6 @@ body {
 .total-confirmed {
   margin-top: 20px;
   text-align: center;
-  font-size: 18px;
+  font-size: 18px;git add .
+
 }
