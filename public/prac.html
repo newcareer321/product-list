@@ -1,0 +1,115 @@
+import React, { useState } from "react";
+import Waffle from "./assets/images/image-waffle-desktop.jpg";
+import Vanilla from "./assets/images/image-creme-brulee-desktop.jpg";
+import Macaron from "./assets/images/image-macaron-desktop.jpg";
+import Tiramisu from "./assets/images/image-tiramisu-desktop.jpg";
+import Baklaba from "./assets/images/image-baklava-desktop.jpg";
+import Meringue from "./assets/images/image-meringue-desktop.jpg";
+import Cake from "./assets/images/image-cake-desktop.jpg";
+import Brownie from "./assets/images/image-brownie-desktop.jpg";
+import Panna from "./assets/images/image-panna-cotta-desktop.jpg";
+import AddToCart from "./assets/images/icon-add-to-cart.svg";
+import CakeCartImg from "./assets/images/illustration-empty-cart.svg";
+import Increment from "./assets/images/icons8-minus-50.png";
+import Decrement from "./assets/images/icons8-plus-50.png";
+
+export default function App() {
+  return (
+    <div className="card-container">
+      <BoxDesserts />
+      <BoxCart />
+    </div>
+  );
+}
+
+function BoxDesserts() {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isAdded, setIsAdded] = useState(Array(9).fill(false)); // Track "Add to Cart" state for each item
+
+  const desserts = [
+    { name: "Waffle With Berries", price: "$6.50", image: Waffle },
+    { name: "Vanilla Bean Creme Brulee", price: "$7.00", image: Vanilla },
+    { name: "Macaron Mix of Five", price: "$8.00", image: Macaron },
+    { name: "Classic Tiramisu", price: "$5.50", image: Tiramisu },
+    { name: "Pistachio Baklava", price: "$4.00", image: Baklaba },
+    { name: "Lemon Meringue Pie", price: "$5.00", image: Meringue },
+    { name: "Red Velvet Cake", price: "$4.50", image: Cake },
+    { name: "Salted Caramel Brownie", price: "$5.50", image: Brownie },
+    { name: "Vanilla Panna Cotta", price: "$6.50", image: Panna },
+  ];
+
+  // Function to toggle image border
+  const handleImageClick = (index) => {
+    setSelectedImage(index === selectedImage ? null : index);
+  };
+
+  // Function to toggle the "Add to Cart" state
+  const toggleCart = (index) => {
+    setIsAdded((prev) => {
+      const newState = [...prev];
+      newState[index] = !newState[index]; // Toggle the specific item
+      return newState;
+    });
+  };
+
+  return (
+    <div className="box-desserts">
+      <h2 className="Desserts">Desserts</h2>
+      <div className="grid-container">
+        {desserts.map((dessert, index) => (
+          <div className="grid-item" key={index}>
+            <div className="image-container">
+              <img
+                src={dessert.image}
+                alt={dessert.name}
+                className={`image ${selectedImage === index ? "selected" : ""}`}
+                onClick={() => handleImageClick(index)}
+              />
+
+              {!isAdded[index] ? (
+                <button
+                  className="add-to-cart"
+                  onClick={() => toggleCart(index)}
+                >
+                  <span>
+                    <img src={AddToCart} alt="Add to Cart" />
+                  </span>
+                  <span>Add to Cart</span>
+                </button>
+              ) : (
+                <button
+                  className="increament-decreament-sign-cart"
+                  onClick={() => toggleCart(index)}
+                >
+                  <span className="inc-dec">
+                    <img src={Decrement} alt="Decrement Item" />
+                    <span>1</span>
+                    <img src={Increment} alt="Increment Item" />
+                  </span>
+                </button>
+              )}
+            </div>
+
+            <div className="item-details">
+              <p>{dessert.name.split(" ")[0]}</p>
+              <h2>{dessert.name}</h2>
+              <p className="price">{dessert.price}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BoxCart() {
+  return (
+    <div className="box-cart">
+      <div className="right-container">
+        <h2>Your Cart (0)</h2>
+      </div>
+      <img src={CakeCartImg} alt="Your Cart" />
+      <p>Your added items will appear here</p>
+    </div>
+  );
+}
